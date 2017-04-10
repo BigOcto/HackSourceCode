@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.bigocto.hack'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
+    defaultConfig {
+        applicationId "com.bigocto.hacksourcecode"
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+//            buildConfigField "boolean", "ENABLE_DEBUG", "false"
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            multiDexEnabled false
+        }
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:24.2.0'
+}
+
+task printProps << {
+
+    if (project.hasProperty('projectProp')) {
+        println projectProp
+    }
+
+}
+
+helloPlugin {
+    injectSpecifyFile = '/Users/zhangyu/OpenProjects/HackSourceCode/app/build/intermediates/classes/debug/com/bigocto/hacksourcecode/MainActivity.class'
+
+//    javaSrcDir = 'src/main/java'
+//    classesOutDir = 'build/out_classes'
+//
+//    outputFileDir = 'release'
+//    outputFileName = 'helloLib-release.jar'
+//
+//    // Android SDK Dir
+//    androidJarDir = android.getSdkDirectory().toString() + "/platforms/" + "${android.compileSdkVersion}"
+//
+//    // JAVA HOME
+//    javaBase = System.properties["java.home"]
+//    javaRt = "/lib/rt.jar"
+//    if (System.properties["os.name"].toLowerCase().contains("mac")) {
+//        if (!new File(javaBase + javaRt).exists()) {
+//            javaRt = "/../Classes/classes.jar"
+//        }
+//    }
+//
+//    proguardConfigFile = 'proguard-rules.pro'
+}
+
+
