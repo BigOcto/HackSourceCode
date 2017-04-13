@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HackSourceCode.iml" filepath="$PROJECT_DIR$/.idea/modules/HackSourceCode.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hack/hack.iml" filepath="$PROJECT_DIR$/.idea/modules/hack/hack.iml" />
+      <module fileurl="file://$PROJECT_DIR$/HackSourceCode.iml" filepath="$PROJECT_DIR$/HackSourceCode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hack/hack.iml" filepath="$PROJECT_DIR$/hack/hack.iml" />
     </modules>
   </component>
 </project>
