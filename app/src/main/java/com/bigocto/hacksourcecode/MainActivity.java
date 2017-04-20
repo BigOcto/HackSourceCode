@@ -12,12 +12,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         JavaInjectTest test = new JavaInjectTest();
         test.test2();
-
-        JavaInjectTest.test1();
-
-        Log.v("zhangyu", "hello world");
     }
 
     @Override

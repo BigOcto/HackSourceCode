@@ -13,17 +13,17 @@ import static org.objectweb.asm.Opcodes.ACC_FINAL;
  * on 2017/3/28.
  */
 
-public class TraceClassVisitor extends ClassVisitor {
+public class HackClassVisitor extends ClassVisitor {
 
     private File file = null;
     private String methodName = '';
-    public TraceClassVisitor(File file, String entry, boolean isJar, int api, ClassWriter cv, String methodName) {
+    public HackClassVisitor(File file, String entry, boolean isJar, int api, ClassWriter cv, String methodName) {
         super(api, cv);
         this.file = file;
         this.methodName = methodName;
     }
 
-    public TraceClassVisitor(File file, String entry, boolean isJar, int api, ClassWriter cv) {
+    public HackClassVisitor(File file, String entry, boolean isJar, int api, ClassWriter cv) {
         super(api, cv);
         this.file = file;
     }
@@ -42,12 +42,12 @@ public class TraceClassVisitor extends ClassVisitor {
         if (HackFileUtils.isEmpty(methodName) ) {
             System.out.println(file.getName() + "Method name : " + name);
             mv = cv.visitMethod(access, name, desc, signature, exceptions);
-            return new TraceMethodVisitor(name, mv);
+            return new HackMethodVisitor(name, mv);
         }else {
             if (methodName.equals(name)){
                 System.out.println(file.getName() + "Specify method name : " + name);
                 mv = cv.visitMethod(access, name, desc, signature, exceptions);
-                return new TraceMethodVisitor(name, mv);
+                return new HackMethodVisitor(name, mv);
             }
         }
 

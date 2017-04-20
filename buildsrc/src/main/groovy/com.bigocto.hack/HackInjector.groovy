@@ -76,9 +76,9 @@ public class HackInjector {
         ClassWriter cw = new ClassWriter(cr, 0)
         ClassVisitor cv
         if (methodName == null){
-            cv = new TraceClassVisitor(file, entry, isJar, Opcodes.ASM4, cw)
+            cv = new HackClassVisitor(file, entry, isJar, Opcodes.ASM4, cw)
         }else {
-            cv = new TraceClassVisitor(file, entry, isJar, Opcodes.ASM4, cw, methodName)
+            cv = new HackClassVisitor(file, entry, isJar, Opcodes.ASM4, cw, methodName)
         }
         cr.accept(cv, 0)
         return cw.toByteArray()

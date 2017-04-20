@@ -8,11 +8,11 @@ import android.util.Log;
  */
 
 public class JavaInjectTest {
-    public static void test1(){
+    public static void test1(String name){
         //Do something what you want
-        Log.v("zhangyu", "啦啦啦阿拉");
+        Log.v("zhangyu", name + "test1 in here");
     }
-    public static void test2(){
+    public void test2(){
         Log.v("zhangyu", "22222222222");
 
     }
