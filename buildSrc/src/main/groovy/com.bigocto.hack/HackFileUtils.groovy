@@ -3,6 +3,8 @@ package com.bigocto.hack;
  * Created by zhangyu
  * on 2017/3/21.
  */
+import groovy.json.JsonSlurper
+
 public class HackFileUtils {
     public static boolean saveJson(String json, String fileName, boolean override) {
         def pending = new File(fileName)
@@ -25,6 +27,14 @@ public class HackFileUtils {
         return text == null || text == '' || text.trim() == ''
     }
 
+    public static Map<String, String> list2Map(List<String> list) {
+        Map<String, String> map = new HashMap<>()
+        list.each { str ->
+            map.put(str,str)
+        }
+        return map
+    }
+
     public static String joinPath(String... sep) {
         if (sep.length == 0) {
             return "";
@@ -45,14 +55,26 @@ public class HackFileUtils {
     }
 
     public static boolean isExistFile(File file) {
-        String p = HackConstans.HACK_CLASS.get(file.name)
+        String p = null;
+        if (HackConstans.HACK_CLASS.size() > 0) {
+            p = HackConstans.HACK_CLASS.get(file.name)
+        }
         println("isExistFile : " + p)
         return p != null
     }
 
-    public static boolean isExistDirectory(File file){
+    public static boolean isExistDirectory(File file) {
         String p = HackConstans.HACk_DIRECTORY.get(file.parentFile.path)
         println("isExistDirectory : " + p)
         return p != null
+    }
+
+    public static List<String> getClassMethods(String className) {
+        List<String> methods = HackConstans.HACK_CLASS_AND_METHOD.get(className)
+        if (methods.size() != 0) {
+            return methods
+        } else {
+            return null
+        }
     }
 }

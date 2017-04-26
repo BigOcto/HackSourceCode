@@ -1,6 +1,7 @@
 package com.bigocto.trace;
 
 
+import android.os.Trace;
 import android.util.Log;
 
 import java.util.HashMap;

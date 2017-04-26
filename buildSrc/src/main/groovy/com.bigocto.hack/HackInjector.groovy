@@ -28,12 +28,19 @@ public class HackInjector {
     public static void injectFile(File file) {
         if (file.path.endsWith(".class")) {
             if (HackFileUtils.isExistFile(file)) {
-                inject(file, null)
+                List<String> list = HackFileUtils.getClassMethods(file.name)
+                if (list != null && list.size() > 0){
+                    HashMap<String ,String> hashMap = HackFileUtils.list2Map(list)
+                    inject(file, hashMap)
+                }else {
+                    inject(file, null)
+                }
+
             }
         }
     }
 
-    public static void inject(File file, String method){
+    public static void inject(File file, HashMap<String, String> method){
         FileInputStream fis = null;
         FileOutputStream fos = null;
         def cacheFile = null
@@ -71,11 +78,11 @@ public class HackInjector {
        return hackClass(file,entry,isJar,inputStream,null)
     }
 
-    private static byte[] hackClass(File file, String entry, boolean isJar, InputStream inputStream, String methodName) {
+    private static byte[] hackClass(File file, String entry, boolean isJar, InputStream inputStream, HashMap<String, String> methodName) {
         ClassReader cr = new ClassReader(inputStream)
         ClassWriter cw = new ClassWriter(cr, 0)
         ClassVisitor cv
-        if (methodName == null){
+        if (methodName == null || methodName.size() == 0){
             cv = new HackClassVisitor(file, entry, isJar, Opcodes.ASM4, cw)
         }else {
             cv = new HackClassVisitor(file, entry, isJar, Opcodes.ASM4, cw, methodName)

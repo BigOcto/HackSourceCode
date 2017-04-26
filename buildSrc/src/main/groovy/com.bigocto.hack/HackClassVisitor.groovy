@@ -1,5 +1,4 @@
-package com.bigocto.hack;
-
+package com.bigocto.hack
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
@@ -16,11 +15,11 @@ import static org.objectweb.asm.Opcodes.ACC_FINAL;
 public class HackClassVisitor extends ClassVisitor {
 
     private File file = null;
-    private String methodName = '';
-    public HackClassVisitor(File file, String entry, boolean isJar, int api, ClassWriter cv, String methodName) {
+    private HashMap<String, String> methodNameHash = new HashMap<>();
+    public HackClassVisitor(File file, String entry, boolean isJar, int api, ClassWriter cv, HashMap<String, String> methodName) {
         super(api, cv);
         this.file = file;
-        this.methodName = methodName;
+        this.methodNameHash = methodName;
     }
 
     public HackClassVisitor(File file, String entry, boolean isJar, int api, ClassWriter cv) {
@@ -38,19 +37,18 @@ public class HackClassVisitor extends ClassVisitor {
     @Override
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         MethodVisitor mv = null
-
-        if (HackFileUtils.isEmpty(methodName) ) {
+        println(access + " ," + desc + "," +name + "," + signature)
+        if (methodNameHash.size() == 0) {
             System.out.println(file.getName() + "Method name : " + name);
             mv = cv.visitMethod(access, name, desc, signature, exceptions);
             return new HackMethodVisitor(name, mv);
         }else {
-            if (methodName.equals(name)){
+            if (!HackFileUtils.isEmpty(methodNameHash.get(name))){
                 System.out.println(file.getName() + "Specify method name : " + name);
                 mv = cv.visitMethod(access, name, desc, signature, exceptions);
                 return new HackMethodVisitor(name, mv);
             }
         }
-
 
         if (cv != null){
             mv = cv.visitMethod(access, name, desc, signature, exceptions);

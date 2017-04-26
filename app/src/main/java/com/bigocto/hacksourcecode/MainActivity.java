@@ -15,6 +15,11 @@ public class MainActivity extends AppCompatActivity {
 
         JavaInjectTest test = new JavaInjectTest();
         test.test2();
+
+        isBoolMethod(false);
+
+        inerClassTest inerClassTest = new inerClassTest();
+        inerClassTest.test2();
     }
 
     @Override
@@ -43,4 +48,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    private boolean isBoolMethod(boolean t){
+        if (t){
+            System.out.print("It is true");
+            return true;
+        }else {
+            System.out.printf("It is false");
+            return false;
+        }
+    }
+
+    class inerClassTest extends JavaInjectTest{
+        @Override
+        public void test2() {
+            super.test2();
+            System.out.print("Main test");
+        }
+    }
+
 }

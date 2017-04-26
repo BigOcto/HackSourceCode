@@ -29,3 +29,12 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     testCompile 'junit:junit:4.12'
 }
+
+task makeJar(type: Jar, dependsOn: ['compileReleaseJavaWithJavac']) {
+    archiveName = "hacke_source_depends_jar.jar"
+    from('build/intermediates/classes/release')
+    destinationDir = file('build/libs')
+    exclude('**/R.class')
+    exclude('**/R\$*.class')
+    include('com/bigocto/trace/**/*.class')
+}

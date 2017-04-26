@@ -1,0 +1,10 @@
+{
+  "MainActivity.class": [
+    "onCreate",
+    "onPause"
+  ],
+  "JavaInjectTest.class": [
+    "test1",
+    "test2"
+  ]
+}
