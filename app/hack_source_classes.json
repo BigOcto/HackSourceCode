@@ -1,0 +1,19 @@
+[
+  {
+    "PACKAGE": "com.bigocto.hacksourcecode",
+    "NAME": "MainActivity.class",
+    "METHODS": [
+      "<init>",
+      "onCreate",
+      "onPause"
+    ]
+  },
+  {
+    "PACKAGE": "com.bigocto.hacksourcecode",
+    "NAME": "JavaInjectTest.class",
+    "METHODS": [
+      "test1",
+      "test2"
+    ]
+  }
+]

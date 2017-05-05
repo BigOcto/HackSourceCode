@@ -1,4 +1,7 @@
-package com.bigocto.hack;
+package com.bigocto.hack
+
+import com.bigocto.hack.bean.HackClassInfo;
+
 /**
  * Created by zhangyu
  * on 2017/3/21.
@@ -23,6 +26,25 @@ public class HackFileUtils {
         return true
     }
 
+    public static List<HackClassInfo> getJson(String filePath) {
+        def inputFile = new File(filePath)
+        def jsonList = new JsonSlurper().parseText(inputFile.text)
+        List<HackClassInfo> hackClassInfoList = new ArrayList<HackClassInfo>()
+
+        jsonList.each { ob ->
+            HackClassInfo info = new HackClassInfo()
+            info.setPackageName(ob.PACKAGE)
+            info.setClassName(ob.NAME)
+            info.setMethodList(ob.METHODS)
+            hackClassInfoList.add(info)
+        }
+        for (HackClassInfo info : hackClassInfoList){
+            println(info.packageName + "." + info.className)
+            println(info.methodList.toString())
+        }
+        return hackClassInfoList
+    }
+
     public static boolean isEmpty(String text) {
         return text == null || text == '' || text.trim() == ''
     }
@@ -30,7 +52,7 @@ public class HackFileUtils {
     public static Map<String, String> list2Map(List<String> list) {
         Map<String, String> map = new HashMap<>()
         list.each { str ->
-            map.put(str,str)
+            map.put(str, str)
         }
         return map
     }

@@ -41,6 +41,12 @@ task printProps << {
 
 }
 
+
+HackSourceCode{
+    configureJsonFile = "/Users/zhangyu/OpenProjects/HackSourceCode/app/hack_source_classes.json"
+}
+
+
 //helloPlugin {
 //    injectSpecifyFile = '/Users/zhangyu/OpenProjects/HackSourceCode/app/build/intermediates/classes/debug/com/bigocto/hacksourcecode/MainActivity.class'
 

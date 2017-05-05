@@ -18,36 +18,43 @@ import proguard.gradle.ProGuardTask
  * on 2017/3/19.
  */
 class HackSourcePlugin implements Plugin<Project> {
-    static final String PLUGIN_NAME = "helloPlugin"
+    static final String PLUGIN_NAME = "HackSourceCode"
 
     Project project
     PluginExtension extension
-    def argsFilePath = null
-
-    //make jars
-    JavaCompile compileJavaSrc
-    Jar jarLib
-    ProGuardTask proguardLib
-    Copy copyLib
+    def debugInjectSpecifyFile = null
+    def configureJsonFile = null
 
     @Override
     void apply(Project project) {
         this.project = project
         this.extension = project.extensions.create(PLUGIN_NAME, PluginExtension)
-        def useTransformApi = extension.useTransformApi
-        if(useTransformApi != null && useTransformApi.equals("true")){
-            def android = project.extensions.findByType(AppExtension)
-            android.registerTransform(new TransformImpl(project))
-        }
-
 
         project.afterEvaluate {
+            def useTransformApi = extension.useTransformApi
+            debugInjectSpecifyFile = extension.debugInjectSpecifyFile
+            configureJsonFile = extension.configureJsonFile
+            if (!HackFileUtils.isEmpty(debugInjectSpecifyFile)) {
+                println "debugInjectSpecifyFile path : ${debugInjectSpecifyFile}"
+            }
+            if (!HackFileUtils.isEmpty(configureJsonFile)) {
+                println "configureJsonFile path : ${configureJsonFile}"
+                HackFileUtils.getJson(configureJsonFile)
+            } else {
+                println "configureJsonFile path null error !!!!!!!"
+            }
+
+            //Using transform api
+            if (useTransformApi != null && useTransformApi.equals("true")) {
+                def android = project.extensions.findByType(AppExtension)
+                android.registerTransform(new TransformImpl(project))
+            }
+
+            //Using hook gradle task
             project.android.applicationVariants.each { variant ->
-                if (useTransformApi == null || !useTransformApi.equals("true")){
+                if (useTransformApi == null || !useTransformApi.equals("true")) {
                     def gradleIsLowVersion = extension.gradleLowVersion
                     def gradleIsHighVersion = extension.gradleHighVersion
-                    argsFilePath = extension.injectSpecifyFile
-                    println "argsFilePath path : ${argsFilePath}"
 
                     def isLowerVersion = false
                     def isHighVersion = false
@@ -190,9 +197,9 @@ class HackSourcePlugin implements Plugin<Project> {
                 def assembleTask = project.tasks.findByName("assemble${variant.name.capitalize()}")
                 if (assembleTask) {
                     assembleTask.doLast {
-                        println "Test assemble task do last inject file path : ${argsFilePath}"
-                        if (argsFilePath != null) {
-                            File file = new File(argsFilePath)
+                        println "Test assemble task do last inject file path : ${debugInjectSpecifyFile}"
+                        if (debugInjectSpecifyFile != null) {
+                            File file = new File(debugInjectSpecifyFile)
                             HackInjector.injectFile(file)
                         }
                     }
@@ -221,7 +228,7 @@ class HackSourcePlugin implements Plugin<Project> {
     }
 
     private void injectFile(File file) {
-        if (HackFileUtils.isEmpty(argsFilePath)) {
+        if (HackFileUtils.isEmpty(debugInjectSpecifyFile)) {
             HackInjector.injectFile(file)
         }
     }
