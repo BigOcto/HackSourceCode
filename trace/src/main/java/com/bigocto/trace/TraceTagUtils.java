@@ -19,13 +19,13 @@ public class TraceTagUtils {
     public static void bigOctoTraceBegin(String method) {
         long time = System.currentTimeMillis();
         methodTimeMap.put(method, time);
-        Log.e("zhangyu", method + " st time: " + time);
+//        Log.e("zhangyu", method + " st time: " + time);
     }
 
     public static void bigOctoTraceEnd(String method) {
         long startTime = methodTimeMap.get(method);
         long endTime = System.currentTimeMillis();
-        Log.e("zhangyu", method + " end time: " + endTime);
+//        Log.e("zhangyu", method + " end time: " + endTime);
         Log.e("zhangyu", method + " total time: " + (endTime - startTime));
     }
 }

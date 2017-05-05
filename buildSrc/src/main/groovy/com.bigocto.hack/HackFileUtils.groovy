@@ -82,7 +82,6 @@ public class HackFileUtils {
         if (HackConstans.HACK_CLASS.size() > 0) {
             p = HackConstans.HACK_CLASS.get(file.name)
         }
-        println("isExistFile : " + p)
         return p != null
     }
 

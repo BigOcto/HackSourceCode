@@ -167,7 +167,6 @@ class HackSourcePlugin implements Plugin<Project> {
                         classesProcessTask.inputs.files.files.each { f ->
                             if (f.isDirectory()) {
                                 f.eachFileRecurse(FileType.FILES) { file ->
-                                    println("file name :" + file.name + "|file path : " + file.path)
                                     injectFile(file)
 
                                     if (file.path.endsWith(".jar")) {
@@ -175,7 +174,6 @@ class HackSourcePlugin implements Plugin<Project> {
                                     }
                                 }
                             } else {
-                                println("file name :" + f.name + "|file path : " + f.path)
                                 injectFile(f)
                                 if (f.path.endsWith(".jar")) {
                                     jarDependencies.add(f.path)
