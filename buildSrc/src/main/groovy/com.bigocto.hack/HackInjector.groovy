@@ -1,5 +1,6 @@
 package com.bigocto.hack
 
+import com.bigocto.hack.visitor.HackClassVisitor
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.ClassWriter
@@ -28,7 +29,7 @@ public class HackInjector {
     public static void injectFile(File file) {
         if (file.path.endsWith(".class")) {
             if (HackFileUtils.isExistFile(file)) {
-                List<String> list = HackFileUtils.getClassMethods(file.name)
+                List<String> list = HackFileUtils.getClassMethods(file)
                 if (list != null && list.size() > 0){
                     HashMap<String ,String> hashMap = HackFileUtils.list2Map(list)
                     inject(file, hashMap)

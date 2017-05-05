@@ -1,6 +1,7 @@
 package com.bigocto.hack
 
-import com.bigocto.hack.bean.HackClassInfo;
+import com.bigocto.hack.bean.HackClassInfo
+import com.bigocto.hack.bean.HackConstans;
 
 /**
  * Created by zhangyu
@@ -91,12 +92,28 @@ public class HackFileUtils {
         return p != null
     }
 
-    public static List<String> getClassMethods(String className) {
-        List<String> methods = HackConstans.HACK_CLASS_AND_METHOD.get(className)
-        if (methods.size() != 0) {
-            return methods
-        } else {
+    public static List<String> getClassMethods(File file) {
+        String filePath = file.getAbsolutePath()
+        String existPackage = ""
+        HackConstans.PACKAGE_NAME.each {key, value ->
+            String packageName = key.replace(".", "/")
+            if (filePath.contains(packageName)){
+                existPackage = key
+            }
+        }
+
+        if (isEmpty(existPackage)){
             return null
+        }else {
+            List<String> methods = HackConstans.HACK_CLASS_AND_METHOD.get(existPackage+"."+file.name)
+
+            println("Get class name : " + existPackage+"."+file.name)
+            println("Get class methods : " + methods.toString())
+            if (methods !=null && methods.size() != 0) {
+                return methods
+            } else {
+                return null
+            }
         }
     }
 }

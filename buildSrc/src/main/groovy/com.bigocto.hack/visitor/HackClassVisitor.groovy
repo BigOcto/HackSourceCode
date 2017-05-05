@@ -1,5 +1,6 @@
-package com.bigocto.hack
+package com.bigocto.hack.visitor
 
+import com.bigocto.hack.HackFileUtils
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;

@@ -1,17 +1,13 @@
 package com.bigocto.hack
 
 import com.android.build.gradle.AppExtension
+import com.bigocto.hack.bean.HackClassInfo
+import com.bigocto.hack.bean.HackConstans
 import com.bigocto.hack.transform.TransformImpl
 import groovy.io.FileType
 import groovy.json.JsonBuilder
-import org.gradle.api.GradleException
-import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.tasks.Copy
-import org.gradle.api.tasks.bundling.Jar
-import org.gradle.api.tasks.compile.JavaCompile
-import proguard.gradle.ProGuardTask
 
 /**
  * Created by zhangyu
@@ -40,6 +36,15 @@ class HackSourcePlugin implements Plugin<Project> {
             if (!HackFileUtils.isEmpty(configureJsonFile)) {
                 println "configureJsonFile path : ${configureJsonFile}"
                 HackFileUtils.getJson(configureJsonFile)
+                List<HackClassInfo> infoList = HackFileUtils.getJson(configureJsonFile)
+                for (HackClassInfo info : infoList){
+                    String fullName = info.getPackageName()+"."+info.getClassName()
+                    HackConstans.HACK_CLASS.put(info.getClassName(), info.getClassName())
+                    HackConstans.HACK_CLASS_AND_METHOD.put(fullName, info.getMethodList())
+                    if (HackConstans.PACKAGE_NAME.get(info.getPackageName()) == null){
+                        HackConstans.PACKAGE_NAME.put(info.getPackageName(),info.getPackageName())
+                    }
+                }
             } else {
                 println "configureJsonFile path null error !!!!!!!"
             }
